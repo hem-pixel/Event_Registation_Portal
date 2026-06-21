@@ -1,0 +1,8 @@
+node_modules/
+frontend/node_modules/
+dist/
+frontend/dist/
+.env
+target/
+backend/jdk-21.0.3+9/
+backend/apache-maven-*/
