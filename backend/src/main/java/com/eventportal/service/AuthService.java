@@ -59,15 +59,20 @@ public class AuthService {
     }
 
     public AuthResponse login(LoginRequest request) {
-        authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        request.getEmail(),
-                        request.getPassword()
-                )
-        );
+    try {
+    authenticationManager.authenticate(
+        new UsernamePasswordAuthenticationToken(
+                request.getEmail(),
+                request.getPassword()
+        )
+    );
+} catch (Exception e) {
+    e.printStackTrace();
+    throw new RuntimeException(e.getMessage());
+}
 
-        User user = userRepository.findByEmail(request.getEmail())
-                .orElseThrow(() -> new RuntimeException("User not found"));
+    User user = userRepository.findByEmail(request.getEmail())
+            .orElseThrow(() -> new RuntimeException("User not found"));
 
         Map<String, Object> extraClaims = new HashMap<>();
         extraClaims.put("role", user.getRole());
